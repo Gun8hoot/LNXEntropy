@@ -19,9 +19,11 @@ $(NAME): GNL $(OBJ)
 	$(CC) $(OBJ) lib/gnl/gnl.a -o $@
 
 clean :
+	make clean -C ./lib/gnl
 	rm -f $(OBJ)
 
 fclean : clean
+	make fclean -C ./lib/gnl
 	rm -f $(NAME)
 
 re : fclean all
