@@ -2,4 +2,4 @@
 .zed
 .clangd
 ./LNXEntropy
-*.gh*
+*.gch

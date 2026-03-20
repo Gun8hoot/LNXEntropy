@@ -1,66 +1,54 @@
 
 #include "includes/main.h"
-#include "lib/gnl/get_next_line.h"
-#include <stdlib.h>
-#include <string.h>
 
 t_event	*devices_parser(void)
 {
 	t_event	*event	= NULL;
-	FILE	*file	= NULL;
+	t_event	*cp		= NULL;
+	DIR		*dir	= NULL;
 	char	*line	= NULL;
-	char	*store	= NULL;
-
-	file = fopen("/proc/bus/input/devices", "rb");
-	if (file == NULL)
-	{
-		printf("[!] Failed to open devices list file\n");
-		return (NULL);
-	}
+	struct dirent *file;
 	event = calloc(1, sizeof(t_event));
 	if (!event)
-	{
-		printf("[!] Failed to allocated memory!\n");
 		return (NULL);
-	}
-	event->event_id = calloc(1, sizeof(int));
-	if (!event->event_id)
+	dir = opendir("/dev/input/by-path");
+	if (dir)
 	{
-		printf("[!] Failed to allocated memory!\n");
-		return (NULL);
-	}
-	while ((line = get_next_line(file)) != NULL)
-	{
-		if (line[0] == 'N')
+		while ((file = readdir(dir)) != NULL)
 		{
-			if (strstr(line, "Touchpad") || strstr(line, "Mouse") || strstr(line, "keyboard"))
+			if (strstr(file->d_name, "event-mouse") != 0 || strstr(file->d_name, "event-kbd") != 0)
 			{
-				while (line && line[0] != 'H')
-					line = get_next_line(file);
-				line = strstr(line, "event");
-				line += 5;
-				while (line && *line != ' ' && *line != '\n')
+				if (!event->event_id)
 				{
-					if (!store)
-						store = calloc(1, sizeof(char));
-					// ADD REALLOC
-					if (!store)
-					{
-						fprintf(stderr, "[!] Failed to allocated memory!\n");
+					event->event_id = calloc(1, sizeof(int));
+					if (!event->event_id)
 						return (NULL);
-					}
-					*store = *line;
-					store++;
-					*store = '\0';
-					line++;
 				}
-				event->event_id[event->event_number++] = atoi(store);
-				if (store)
-					free(store);
+				else
+				{
+					cp = realloc(event, event->event_number + 1);
+					if (!cp)
+						return (NULL);
+					event = cp;
+				}
+				printf("%s\n", file->d_name);
+				line = calloc(20 + strlen(file->d_name) + 1, sizeof(char));
+				if (!line)
+					return (NULL);
+				sprintf(line, "/dev/input/by-path/%s", file->d_name);
+				event->event_id[event->event_number] = open(line, O_RDONLY | O_NONBLOCK);
+				if (!event->event_id[event->event_number])
+				{
+					if (line)
+						free(line);
+					closedir(dir);
+					return (NULL);
+				}
+				event->event_number++;
 			}
 		}
-		if (line)
-			free(line);
 	}
+
+
 	return (event);
 }
