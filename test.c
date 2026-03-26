@@ -6,8 +6,8 @@
 
 typedef struct	s_event
 {
-	int		*device_fd;
-	int		devices_number;
+	int		*device_fd;			// 8 (change to short)
+	int		devices_number;		// 4 (change to short)
 }				t_event;
 
 typedef struct	s_thread
@@ -22,5 +22,5 @@ typedef struct	s_thread
 
 int main(void)
 {
-	printf("%d\n", sizeof(t_thread));
+	printf("%d\n", sizeof(short));
 }

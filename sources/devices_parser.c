@@ -1,31 +1,33 @@
 
 #include "includes/main.h"
 
-int	open_devices(t_event **event, char *filename)
+int	init_device(t_event *event, char *filename)
 {
-	t_event	*cp		= NULL;
+	int	*cp		= NULL;
 	char	*line	= NULL;
 
-	if (!(*event)->device_fd)
+	if (!event->device_fd)
 	{
-		(*event)->device_fd = calloc(1, sizeof(int));
-		if (!(*event)->device_fd)
+		event->device_fd = calloc(1, sizeof(int));
+		if (!event->device_fd)
 			return (-1);
 	}
 	else
 	{
-		cp = realloc(*event, sizeof(int) * ((*event)->devices_number + 1));
+		cp = realloc(event->device_fd, sizeof(int) * (event->devices_number + 1));
 		if (!cp)
+		{
+			fprintf(stderr, "[!] Failed to allocate memory!\n");
 			return (-1);
-		*event = cp;
+		}
+		event->device_fd = cp;
 	}
 	line = calloc(BY_PATH_STR_SIZE + strlen(filename) + 1, sizeof(char));
 	if (!line)
 		return (-1);
 	sprintf(line, "/dev/input/by-path/%s", filename);
-	printf("%s\n", line);
-	(*event)->device_fd[(*event)->devices_number] = open(line, O_RDONLY | O_NONBLOCK);
-	if (!(*event)->device_fd[(*event)->devices_number])
+	event->device_fd[event->devices_number] = open(line, O_RDONLY | O_NONBLOCK);
+	if (!event->device_fd[event->devices_number])
 	{
 		if (line)
 			free(line);
@@ -36,18 +38,14 @@ int	open_devices(t_event **event, char *filename)
 		free(line);
 		line = NULL;
 	}
-	return ((*event)->device_fd[(*event)->devices_number]);
+	return (event->device_fd[event->devices_number]);
 }
 
-t_event	*devices_parser(void)
+t_event	*devices_parser(t_event *event)
 {
-	t_event	*event	= NULL;
 	DIR		*dir	= NULL;
 	struct	dirent *file;
 
-	event = calloc(1, sizeof(t_event));
-	if (!event)
-		return (NULL);
 	dir = opendir("/dev/input/by-path");
 	if (!dir)
 	{
@@ -58,9 +56,9 @@ t_event	*devices_parser(void)
 	{
 		if (strstr(file->d_name, "event-mouse") != 0 || strstr(file->d_name, "event-kbd") != 0)
 		{
-			if (open_devices(&event, file->d_name) < 0)
+			if (init_device(event, file->d_name) < 0)
 			{
-				clear_event(&event);
+				clear_event(event);
 				closedir(dir);
 				return (NULL);
 			}

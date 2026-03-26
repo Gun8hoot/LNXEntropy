@@ -18,8 +18,8 @@ void	free_array(void *array)
 	}
 }
 
-void	clear_event(t_event **event)
+void	clear_event(t_event *event)
 {
-	free_array(&(*event)->device_fd);
-	(*event)->devices_number = 0;
+	free_array(&event->device_fd);
+	event->devices_number = 0;
 }

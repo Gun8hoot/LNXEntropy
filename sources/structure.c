@@ -1,6 +1,6 @@
 #include "includes/main.h"
 
-t_store		*init_store()
+t_store		*init_store(void)
 {
 	t_store	*store;
 
@@ -13,6 +13,7 @@ t_store		*init_store()
 	store->thread = NULL;
 	pthread_mutex_init(&store->event_lock, NULL);
 	pthread_mutex_init(&store->exit_lock, NULL);
+	store->test = 23;
 	return (store);
 }
 

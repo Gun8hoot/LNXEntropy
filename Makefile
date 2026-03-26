@@ -3,7 +3,9 @@ NAME	=	LNXEntropy
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra -I. -g3
 
-SRC		=	main.c\
+SRC		=	sources/main.c\
+			sources/structure.c\
+			sources/thread.c\
 			sources/devices_parser.c\
 			sources/safety.c
 
