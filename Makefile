@@ -3,8 +3,10 @@ NAME	=	LNXEntropy
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra -I. -g3
 
-SRC		=	./main.c\
-			./sources/devices_parser.c
+SRC		=	main.c\
+			sources/devices_parser.c\
+			sources/safety.c
+
 OBJ		=	$(SRC:%.c=%.o)
 
 %.o: %.c
