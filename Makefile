@@ -7,6 +7,7 @@ SRC		=	sources/main.c\
 			sources/structure.c\
 			sources/thread.c\
 			sources/devices_parser.c\
+			sources/signal_handler.c\
 			sources/safety.c
 
 OBJ		=	$(SRC:%.c=%.o)

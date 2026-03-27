@@ -9,4 +9,6 @@
 # include "includes/struct.h"
 # include "includes/error.h"
 
+extern sig_atomic_t	sig_status;
+
 #endif

@@ -3,6 +3,8 @@
 bool	check_exit(t_thread *thread)
 {
 	pthread_mutex_lock(thread->exit_lock);
+	if (sig_status != 0)
+		*thread->exit = true;
 	if (*thread->exit)
 	{
 		pthread_mutex_unlock(thread->exit_lock);
@@ -53,6 +55,7 @@ bool	multi_threading(t_store **store)
 		fprintf(stderr, EALLOC);
 		return (false);
 	}
+	printf("PID = %d\n", getpid());
 	// Create every threads
 	for (int i = 0 ; i < (*store)->event.devices_number ; i++)
 	{
@@ -78,6 +81,3 @@ bool	multi_threading(t_store **store)
 	}
 	return (true);
 }
-
-// 1: (*store)->thread = (t_thread **) 0x10000d430
-// 2: *(*store)->thread = (t_thread *) 0x10000d4f0

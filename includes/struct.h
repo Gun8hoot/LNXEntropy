@@ -12,26 +12,29 @@ typedef struct	s_event
 	int		devices_number;	// 4
 }				t_event;
 
+// NEED TO DO BETTER HANDLE TO OPTIMIZE MEMORY ALLIGNEMENT !!
 typedef struct	s_thread
 {
-	int				number;			// 4
-	t_event			*event;			// 16
-	pthread_mutex_t	*event_lock;	// 40
-	pthread_t		tid;			// 8
-	pthread_mutex_t	*exit_lock;		// 40
-	bool			*exit;			// 1
-	pthread_mutex_t	number_lock;	// 40
+	int				number;					// 4
+	t_event			*event;					// 16
+	pthread_mutex_t	*event_lock;			// 40
+	pthread_t		tid;					// 8
+	pthread_mutex_t	*exit_lock;				// 40
+	bool			*exit;					// 1
+	pthread_mutex_t	number_lock;			// 40
+	int64_t			*timestamp_last_value;	//8
 }				t_thread;
 
 typedef struct	s_store
 {
-	t_thread		**thread;		// 40
-	t_event			event;			// 16
-	pthread_mutex_t	event_lock;		// 40
-	pthread_mutex_t	exit_lock;		// 40
-	bool			exit;			// 1
-	int				test;			// 4
-	pid_t			pid;			// 4
+	int64_t			timestamp_last_value;	// 8
+	t_thread		**thread;				// 40
+	t_event			event;					// 16
+	pthread_mutex_t	event_lock;				// 40
+	pthread_mutex_t	exit_lock;				// 40
+	bool			exit;					// 1
+	pid_t			pid;					// 4
+	sa_t			sa;
 }				t_store;
 
 #endif

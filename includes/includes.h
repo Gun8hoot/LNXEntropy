@@ -6,8 +6,10 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <stdint.h>
 # include <stdlib.h>
 # include <string.h>
+# include <errno.h>
 # include <pthread.h>
 # include <linux/input.h>
 # include <linux/input-event-codes.h>

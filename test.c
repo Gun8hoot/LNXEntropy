@@ -1,6 +1,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 
 
@@ -19,8 +20,12 @@ typedef struct	s_thread
 	bool			*exit;			// 1
 }				t_thread;
 
+int64_t abc(void)
+{
+	return (12345678910);
+}
 
 int main(void)
 {
-	printf("%d\n", sizeof(pid_t));
+	printf("%ld\n", sizeof(int64_t *));
 }
