@@ -9,5 +9,6 @@ void	free_array(void *array);
 void	clear_event(t_event *event);
 t_store		*init_store(void);
 t_thread	*init_thread(t_store *store);
+bool	multi_threading(t_store **store);
 
 #endif

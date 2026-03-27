@@ -15,9 +15,10 @@ typedef struct	s_thread
 	int				number;			// 4
 	t_event			*event;			// 16
 	pthread_mutex_t	*event_lock;	// 40
-	pthread_t		*tid;			// 8
+	pthread_t		tid;			// 8
 	pthread_mutex_t	*exit_lock;		// 40
 	bool			*exit;			// 1
+	pthread_mutex_t	number_lock;	// 40
 }				t_thread;
 
 typedef struct	s_store
@@ -27,7 +28,8 @@ typedef struct	s_store
 	pthread_mutex_t	event_lock;		// 40
 	pthread_mutex_t	exit_lock;		// 40
 	bool			exit;			// 1
-	int				test;
+	int				test;			// 4
+	pid_t			pid;			// 4
 }				t_store;
 
 #endif

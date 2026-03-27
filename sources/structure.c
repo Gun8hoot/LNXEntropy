@@ -7,13 +7,11 @@ t_store		*init_store(void)
 	store = calloc(1, sizeof(t_store));
 	if (!store)
 	{
-		fprintf(stderr, "[!] Failled to allocated memory\n");
+		fprintf(stderr, EALLOC);
 		return (NULL);
 	}
-	store->thread = NULL;
 	pthread_mutex_init(&store->event_lock, NULL);
 	pthread_mutex_init(&store->exit_lock, NULL);
-	store->test = 23;
 	return (store);
 }
 
@@ -24,11 +22,13 @@ t_thread	*init_thread(t_store	*store)
 	thread = calloc(1, sizeof(t_thread));
 	if (!thread)
 	{
-		fprintf(stderr, "[!] Failled to allocated memory\n");
+		fprintf(stderr, EALLOC);
 		return (NULL);
 	}
 	thread->event_lock	= &store->event_lock;
 	thread->exit_lock	= &store->exit_lock;
 	thread->exit		= &store->exit;
+	thread->event		= &store->event;
+	pthread_mutex_init(&thread->number_lock, NULL);
 	return (thread);
 }

@@ -7,5 +7,6 @@
 # include "includes/prototypes.h"
 # include "includes/includes.h"
 # include "includes/struct.h"
+# include "includes/error.h"
 
 #endif

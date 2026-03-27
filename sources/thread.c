@@ -3,7 +3,7 @@
 bool	check_exit(t_thread *thread)
 {
 	pthread_mutex_lock(thread->exit_lock);
-	if (thread->exit)
+	if (*thread->exit)
 	{
 		pthread_mutex_unlock(thread->exit_lock);
 		return (true);
@@ -33,23 +33,39 @@ void	*routine(void *ptr_thread)
 	pthread_exit(0);
 }
 
-bool	multi_threading(t_store *store)
+bool	multi_threading(t_store **store)
 {
-	for (int i = 0 ; i < store->event.devices_number ; i++)
+	(*store)->thread = calloc((*store)->event.devices_number, sizeof(t_thread));
+	if (!(*store)->thread)
 	{
-		store->thread[i]->number = i;
-		if (!pthread_create(store->thread[i]->tid, NULL, routine, &store->thread[i]))
+		fprintf(stderr, EALLOC);
+		return (false);
+	}
+	// Create every threads
+	for (int i = 0 ; i < (*store)->event.devices_number ; i++)
+	{
+		(*store)->thread[i] = init_thread(*store);
+		pthread_mutex_lock(&(*store)->thread[i]->number_lock);
+		(*store)->thread[i]->number = i;
+		pthread_mutex_unlock(&(*store)->thread[i]->number_lock);
+		if (pthread_create(&(*store)->thread[i]->tid, NULL, &routine, (*store)->thread[i]))
 		{
-			pthread_mutex_lock(&store->exit_lock);
-			store->exit = true;
-			pthread_mutex_unlock(&store->exit_lock);
+			// If not created, clean everything
+			pthread_mutex_lock(&(*store)->exit_lock);
+			(*store)->exit = true;
+			pthread_mutex_unlock(&(*store)->exit_lock);
 			fprintf(stderr, "[!] Failed to create thread!\n");
-			return (false);
+			break ;
 		}
 	}
-	for (int i = 0 ; i < store->event.devices_number ; i++)
+
+	// Wait until every thread finish
+	for (int i = 0 ; i < (*store)->event.devices_number ; i++)
 	{
-
+		pthread_join((*store)->thread[i]->tid, NULL);
 	}
-
+	return (true);
 }
+
+// 1: (*store)->thread = (t_thread **) 0x10000d430
+// 2: *(*store)->thread = (t_thread *) 0x10000d4f0

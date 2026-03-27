@@ -22,5 +22,5 @@ typedef struct	s_thread
 
 int main(void)
 {
-	printf("%d\n", sizeof(short));
+	printf("%d\n", sizeof(pid_t));
 }
