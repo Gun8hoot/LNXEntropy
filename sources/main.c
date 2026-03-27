@@ -22,6 +22,7 @@ int main(void)
 		fprintf(stderr, EROOT);
 		return (1);
 	}
+	printf("LNX launched\n");
 	if (!init(&store))
 		return (1);
 	if (!multi_threading(&store))

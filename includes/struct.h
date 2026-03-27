@@ -4,6 +4,8 @@
 
 #include "includes/includes.h"
 
+typedef struct sigaction sa_t;
+
 typedef struct	s_event
 {
 	int		*device_fd;		// 8
