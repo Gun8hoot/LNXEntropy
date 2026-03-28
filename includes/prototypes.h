@@ -12,5 +12,6 @@ bool	multi_threading(t_store **store);
 bool	init_signal(sa_t	*sig);
 void	clear_all(t_store **store);
 void	clear_event(t_event *event);
+bool	init(t_store **store);
 
 #endif

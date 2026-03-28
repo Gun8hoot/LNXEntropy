@@ -2,7 +2,18 @@
 
 int	lnxentropy_init()
 {
-	;
+	t_store	*store;
+
+	if (geteuid() != 0)
+	{
+		fprintf(stderr, EROOT);
+		return (-1);
+	}
+	errno = 27;
+	if (fork() != 0)
+		exit(1);
+	if (!init(&store))
+		return (1);
 	return (1); // RETURN FORK PID
 }
 
