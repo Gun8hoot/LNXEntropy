@@ -2,6 +2,8 @@
     <img src=".images/lnxentropy.png">
 </div>
 
+<h2>STILL IN BUILD</h2>
+
 ## Description:
 LNXEntropy is a library contain function that can add randomness to a pseudo-generated number
 

@@ -14,5 +14,6 @@
 # include <linux/input.h>
 # include <linux/input-event-codes.h>
 # include <dirent.h>
+#include <sys/wait.h>
 
 #endif
