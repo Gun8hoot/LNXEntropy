@@ -52,7 +52,7 @@ bool	multi_threading(t_store **store)
 	(*store)->thread = calloc((*store)->event.devices_number, sizeof(t_thread));
 	if (!(*store)->thread)
 	{
-		fprintf(stderr, EALLOC);
+		fprintf(stderr, MSG_ALLOC);
 		return (false);
 	}
 	printf("PID = %d\n", getpid());

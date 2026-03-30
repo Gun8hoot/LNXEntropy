@@ -5,7 +5,8 @@ CFLAGS	=	-Wall -Werror -Wextra -I. -g3
 
 SRC		=	sources/main.c\
 			sources/structure.c\
-			sources/thread.c\
+			sources/threads.c\
+			sources/init.c\
 			sources/devices_parser.c\
 			sources/signal_handler.c\
 			sources/safety.c

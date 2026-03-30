@@ -11,22 +11,29 @@ int	lnxentropy_init()
 		return (-1);
 	}
 	pid = fork();
-	if (pid != 0)
+	if (pid == 0)
+	{
+		if (!init(&store))
+			return (1);
+		if (!multi_threading(&store))
+			return (1);
+		for (uint16_t i = 0; i < store->event.devices_number; i++)
+			pthread_join(store->thread[i]->tid, NULL);
 		return(pid);
-	if (!init(&store))
-		return (1);
-	return (1); // RETURN FORK PID
+	}
+	return (pid); // RETURN FORK PID
 }
 
-int64_t	lnxentropy_get()
+int64_t	lnxentropy_get(uint64_t min, uint64_t max)
 {
 	;
 	return (1); // THE NUMBER GET FROM INPUT
 }
 
-int	lnxentropy_clean(int pid)
+bool	lnxentropy_exit(int pid)
 {
-	waitpid(pid);
+	kill(pid, SIGQUIT);
+	waitpid(pid, NULL, NULL);
 	return (1); // STATUS CODE ; 1 SUCCES - 0 FAILURE
 }
 

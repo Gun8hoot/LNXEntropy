@@ -11,7 +11,7 @@ int	init_device(t_event *event, char *filename)
 		event->device_fd = calloc(1, sizeof(int));
 		if (!event->device_fd)
 		{
-			fprintf(stderr, EALLOC);
+			fprintf(stderr, MSG_ALLOC);
 			return (-1);
 		}
 	}
@@ -20,7 +20,7 @@ int	init_device(t_event *event, char *filename)
 		cp = realloc(event->device_fd, sizeof(int) * (event->devices_number + 1));
 		if (!cp)
 		{
-			fprintf(stderr, EALLOC);
+			fprintf(stderr, MSG_ALLOC);
 			return (-1);
 		}
 		event->device_fd = cp;
@@ -28,7 +28,7 @@ int	init_device(t_event *event, char *filename)
 	line = calloc(BY_PATH_STR_SIZE + strlen(filename) + 1, sizeof(char));
 	if (!line)
 	{
-		fprintf(stderr, EALLOC);
+		fprintf(stderr, MSG_ALLOC);
 		return (-1);
 	}
 	sprintf(line, "/dev/input/by-path/%s", filename);
@@ -55,7 +55,7 @@ t_event	*devices_parser(t_event *event)
 	dir = opendir("/dev/input/by-path");
 	if (!dir)
 	{
-		fprintf(stderr, EOPEN, "/dev/input/by-path\n");
+		fprintf(stderr, MSG_OPEN, "/dev/input/by-path\n");
 		return (NULL);
 	}
 	while ((file = readdir(dir)) != NULL)

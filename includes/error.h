@@ -3,16 +3,18 @@
 # define ERROR_H
 
 // --- ERROR MESSAGES ---
-# define EALLOC "[!] Failed to allocated memory!"
-# define ETHREAD "[!] Failed to create thread!"
-# define EFORK "[!] Failed to create fork!"
-# define EROOT "[!] The program need root privileges!"
-# define EOPEN "[!] Failed to open %s!"
+# define MSG_ALLOC "[!] Failed to allocated memory!"
+# define MSG_THREAD "[!] Failed to create thread!"
+# define MSG_FORK "[!] Failed to create fork!"
+# define MSG_ROOT "[!] The program need root privileges!"
+# define MSG_OPEN "[!] Failed to open %s!"
+
+
 
 // --- ERROR CODES ---
-# define EERRNO_ALLOC	0x01
-# define EERRNO_PROCESS	0x02
-# define EERRNO_ROOT	0x03
-# define EERRNO_OPEN	0x04
+# define EALLOC		0x01
+# define EPROCESS	0x02
+# define EROOT		0x03
+# define EOPEN		0x04
 
 #endif

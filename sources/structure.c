@@ -7,7 +7,7 @@ t_store		*init_store(void)
 	store = calloc(1, sizeof(t_store));
 	if (!store)
 	{
-		fprintf(stderr, EALLOC);
+		fprintf(stderr, MSG_ALLOC);
 		return (NULL);
 	}
 	pthread_mutex_init(&store->event_lock, NULL);
@@ -22,7 +22,7 @@ t_thread	*init_thread(t_store	*store)
 	thread = calloc(1, sizeof(t_thread));
 	if (!thread)
 	{
-		fprintf(stderr, EALLOC);
+		fprintf(stderr, MSG_ALLOC);
 		return (NULL);
 	}
 	thread->event_lock	= &store->event_lock;
