@@ -12,9 +12,10 @@
 
 
 // --- ERROR CODES ---
-# define EALLOC		0x01
-# define EPROCESS	0x02
-# define EROOT		0x03
-# define EOPEN		0x04
+# define EALLOC				0x01
+# define EPROCESS			0x02
+# define EROOT				0x03
+# define EOPEN				0x04
+# define EPIPE_FAILED		0x05
 
 #endif

@@ -53,6 +53,14 @@ void	clear_event(t_event *event)
 	}
 }
 
+void	close_pipe(int **pipe)
+{
+	if (*pipe[0] > 2)
+		close(*pipe[0]);
+	if (*pipe[1] > 2)
+		close(*pipe[1]);
+}
+
 void	clear_all(t_store **store)
 {
 	pthread_mutex_destroy(&(*store)->event_lock);

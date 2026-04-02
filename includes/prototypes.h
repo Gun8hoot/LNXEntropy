@@ -13,5 +13,8 @@ bool	init_signal(sa_t	*sig);
 void	clear_all(t_store **store);
 void	clear_event(t_event *event);
 bool	init(t_store **store);
+int		lnxentropy_init();
+bool	init_pipe(void);
+int		*get_pipe(bool pipe_status);
 
 #endif

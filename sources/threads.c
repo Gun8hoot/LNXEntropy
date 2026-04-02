@@ -18,11 +18,13 @@ void	*routine(void *ptr_thread)
 {
 	t_thread	*thread;
 	struct	input_event input;
+	int	*pipe_fd;
 
 	thread = (t_thread *)ptr_thread;
-	memset(&input, '\0', sizeof(input));
+	pipe_fd = get_pipe(false);
 	while (!check_exit(thread))
 	{
+		memset(&input, '\0', sizeof(input));
 		read((*thread->event).device_fd[thread->number], &input, sizeof(struct input_event));
 		if (input.type)
 		{
@@ -40,6 +42,7 @@ void	*routine(void *ptr_thread)
 			{
 				printf("Keyboard event: code %d, value %d, type %d\n", input.code, input.value, input.type);
 			}
+			write(pipe_fd[0], &input.value, sizeof(input.value));
 			pthread_mutex_unlock(thread->event_lock);
 		}
 		usleep(1000);
@@ -70,6 +73,11 @@ bool	multi_threading(t_store **store)
 			(*store)->exit = true;
 			pthread_mutex_unlock(&(*store)->exit_lock);
 			fprintf(stderr, "[!] Failed to create thread!\n");
+			for (uint16_t i = 0; i < (*store)->event.devices_number; i++)
+			{
+				if ((*store)->thread[i])
+					pthread_join((*store)->thread[i]->tid, NULL);
+			}
 			break ;
 		}
 	}

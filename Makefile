@@ -9,6 +9,7 @@ SRC		=	sources/main.c\
 			sources/init.c\
 			sources/devices_parser.c\
 			sources/signal_handler.c\
+			sources/lnxentropy.c\
 			sources/safety.c
 
 OBJ		=	$(SRC:%.c=%.o)

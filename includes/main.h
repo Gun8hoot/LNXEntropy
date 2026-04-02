@@ -10,5 +10,7 @@
 # include "includes/error.h"
 
 extern sig_atomic_t	sig_status;
+extern int	pipe_fd[2];
+
 
 #endif
